@@ -1,2 +1,8 @@
-package PACKAGE_NAME;public class ZuulRunner {
+public class ZuulRunner
+{
+    public static void main(String[] args)
+    {
+        Game g = new Game();
+        g.play();
+    }
 }
