@@ -54,13 +54,13 @@ public class Game
         auditorium = new Room("in the auditorium");
 
         // haunted house game rooms
-        mainHall = new Room("in main hallway");
-        graveyard = new Room("in haunted graveyard");
-        batCave = new Room("in dark bat cave");
-        abandonedSchool = new Room("in abandoned room with mean ghost teachers");
-        ghostRoom = new Room("in creepy room full of ghosts");
-        zombieRoom = new Room("in scary room full of brain-eating zombies");
-        safeExit = new Room("safely outside haunted house");
+//        mainHall = new Room("in main hallway");
+//        graveyard = new Room("in haunted graveyard");
+//        batCave = new Room("in dark bat cave");
+//        abandonedSchool = new Room("in abandoned room with mean ghost teachers");
+//        ghostRoom = new Room("in creepy room full of ghosts");
+//        zombieRoom = new Room("in scary room full of brain-eating zombies");
+//        safeExit = new Room("safely outside haunted house");
 
 
 
@@ -83,16 +83,17 @@ public class Game
 
 
         // initialize room exits for haunted house
-        mainHall.setExits(graveyard, abandonedSchool, ghostRoom, zombieRoom);
-        graveyard.setExits(null, batCave, mainHall, null);
-        ghostRoom.setExits(mainHall, safeExit, null, null);
-        zombieRoom.setExits(null, mainHall, null, null);
-        batCave.setExits();
-        abandonedSchool.setExits();
-        safeExit.setExits();
+//        mainHall.setExits(graveyard, abandonedSchool, ghostRoom, zombieRoom);
+//        graveyard.setExits(null, batCave, mainHall, null);
+//        ghostRoom.setExits(mainHall, safeExit, null, null);
+//        zombieRoom.setExits(null, mainHall, null, null);
+//        batCave.setExits(null, null, abandonedSchool, mainHall);
+//        abandonedSchool.setExits(batCave, null, safeExit, ghostRoom);
+//        safeExit.setExits(abandonedSchool, null, null, ghostRoom);
 
 
         currentRoom = auditoriumLobby;  // start game outside
+        //currentRoom = mainHall;
     }
 
     /**
