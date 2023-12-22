@@ -1,3 +1,6 @@
+import java.util.HashMap;
+import java.util.Set;
+
 /**
  * Class Room - a room in an adventure game.
  *
@@ -14,11 +17,8 @@
  */
 public class Room
 {
-    public String description;
-    public Room northExit;
-    public Room southExit;
-    public Room eastExit;
-    public Room westExit;
+    private String description;
+    private HashMap<String, Room> exits;
 
     /**
      * Create a room described "description". Initially, it has
@@ -29,31 +29,50 @@ public class Room
     public Room(String description)
     {
         this.description = description;
+        exits = new HashMap();
     }
 
     /**
      * Define the exits of this room.  Every direction either leads
      * to another room or is null (no exit there).
      * @param north The north exit.
-     * @param east The east east.
+     * @param east The east exit.
      * @param south The south exit.
      * @param west The west exit.
      */
     public void setExits(Room north, Room east, Room south, Room west)
     {
         if(north != null) {
-            northExit = north;
+            exits.put("north", north);
         }
         if(east != null) {
-            eastExit = east;
+            exits.put("east", east);
         }
         if(south != null) {
-            southExit = south;
+            exits.put("south", south);
         }
         if(west != null) {
-            westExit = west;
+            exits.put("west", west);
         }
     }
+
+    /** Return the room that is reached if we go from this room in direction
+     * "direction." If there is no room return null.
+     * @param direction The exit's direction
+     * @return the room in the given direction
+     */
+    public Room getExit(String direction) {
+        return exits.get(direction);
+    }
+
+    /** Define an exit for this room
+     * @param direction The direction of the exit
+     * @param neighbor The room in the given direction
+     */
+    public void setExit(String direction, Room neighbor) {
+        exits.put(direction, neighbor);
+    }
+
 
     /**
      * @return The description of the room.
@@ -61,6 +80,18 @@ public class Room
     public String getDescription()
     {
         return description;
+    }
+
+    /** Return a description of the room Exits
+     * @return Return a description of the available exits
+     */
+    public String getExitString() {
+        String returnString = "";
+        Set<String> keys = exits.keySet();
+        for (String exit: keys) {
+            returnString += " " + exit;
+        }
+        return returnString;
     }
 
 }

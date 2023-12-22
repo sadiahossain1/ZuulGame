@@ -15,6 +15,7 @@
  * @version 2016.02.29
  */
 
+import java.util.Set;
 public class Game
 {
     private Parser parser;
@@ -36,7 +37,8 @@ public class Game
     {
         Room auditoriumLobby, centerWestHallway, centerEastHallway, fortGreenePlace,
                 toNorthWestEntrance, toSouthWestEntrance, auditorium, toNorthEastEntrance,
-                toSouthEastEntrance, southEliot, murral, mainHall, graveyard, batCave,
+                toSouthEastEntrance, southEliot, murral, secretRoomBelowAuditorium,
+        mainHall, graveyard, batCave,
                 abandonedSchool, ghostRoom, zombieRoom, safeExit;
 
         // create the rooms
@@ -52,6 +54,8 @@ public class Game
         southEliot = new Room("outside center east on South Elliot");
         murral = new Room("at the murral in the lobby");
         auditorium = new Room("in the auditorium");
+        secretRoomBelowAuditorium = new Room("secret room below the auditorium");
+
 
         // haunted house game rooms
 //        mainHall = new Room("in main hallway");
@@ -80,6 +84,8 @@ public class Game
         southEliot.setExits(null, centerEastHallway, null, null);
         toNorthEastEntrance.setExits(null, null, centerEastHallway, null);
         toSouthEastEntrance.setExits(centerEastHallway, null, null, null);
+        auditorium.setExit("downstairs", secretRoomBelowAuditorium);
+        secretRoomBelowAuditorium.setExit("upstairs", auditorium);
 
 
         // initialize room exits for haunted house
@@ -102,6 +108,7 @@ public class Game
     public void play()
     {
         printWelcome();
+        printLocationInfo();
 
         // Enter the main command loop.  Here we repeatedly read commands and
         // execute them until the game is over.
@@ -117,27 +124,30 @@ public class Game
     /**
      * Print out the opening message for the player.
      */
-    private void printWelcome()
-    {
+    private void printWelcome() {
         System.out.println();
         System.out.println("Welcome to the World of Zuul!");
         System.out.println("World of Zuul is a new, incredibly boring adventure game.");
         System.out.println("Type 'help' if you need help.");
         System.out.println();
+    }
+
+    public void printLocationInfo() {
         System.out.println("You are " + currentRoom.getDescription());
         System.out.print("You can go: ");
-        if(currentRoom.northExit != null) {
-            System.out.print("north ");
-        }
-        if(currentRoom.eastExit != null) {
-            System.out.print("east ");
-        }
-        if(currentRoom.southExit != null) {
-            System.out.print("south ");
-        }
-        if(currentRoom.westExit != null) {
-            System.out.print("west ");
-        }
+        System.out.print(currentRoom.getExitString());
+//        if(currentRoom.getExit("north") != null) {
+//            System.out.print("north ");
+//        }
+//        if(currentRoom.getExit("east") != null) {
+//            System.out.print("east ");
+//        }
+//        if(currentRoom.getExit("south") != null) {
+//            System.out.print("south ");
+//        }
+//        if(currentRoom.getExit("west") != null) {
+//            System.out.print("west ");
+//        }
         System.out.println();
     }
 
@@ -189,9 +199,8 @@ public class Game
      * Try to go in one direction. If there is an exit, enter
      * the new room, otherwise print an error message.
      */
-    private void goRoom(Command command)
-    {
-        if(!command.hasSecondWord()) {
+    private void goRoom(Command command) {
+        if (!command.hasSecondWord()) {
             // if there is no second word, we don't know where to go...
             System.out.println("Go where?");
             return;
@@ -201,41 +210,31 @@ public class Game
 
         // Try to leave current room.
         Room nextRoom = null;
-        if(direction.equals("north")) {
-            nextRoom = currentRoom.northExit;
-        }
-        if(direction.equals("east")) {
-            nextRoom = currentRoom.eastExit;
-        }
-        if(direction.equals("south")) {
-            nextRoom = currentRoom.southExit;
-        }
-        if(direction.equals("west")) {
-            nextRoom = currentRoom.westExit;
-        }
+        nextRoom = currentRoom.getExit(direction);
 
         if (nextRoom == null) {
             System.out.println("There is no door!");
         }
         else {
             currentRoom = nextRoom;
+        }
             System.out.println("You are " + currentRoom.getDescription());
             System.out.print("Exits: ");
-            if(currentRoom.northExit != null) {
+            if(currentRoom.getExit("north") != null) {
                 System.out.print("north ");
             }
-            if(currentRoom.eastExit != null) {
+            if(currentRoom.getExit("east") != null) {
                 System.out.print("east ");
             }
-            if(currentRoom.southExit != null) {
+            if(currentRoom.getExit("south") != null) {
                 System.out.print("south ");
             }
-            if(currentRoom.westExit != null) {
+            if(currentRoom.getExit("west") != null) {
                 System.out.print("west ");
             }
             System.out.println();
-        }
     }
+
 
     /**
      * "Quit" was entered. Check the rest of the command to see
