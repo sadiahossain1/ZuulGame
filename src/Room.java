@@ -73,7 +73,6 @@ public class Room
         exits.put(direction, neighbor);
     }
 
-
     /**
      * @return The description of the room.
      */
@@ -93,5 +92,4 @@ public class Room
         }
         return returnString;
     }
-
 }

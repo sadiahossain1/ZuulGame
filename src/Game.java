@@ -14,8 +14,6 @@
  * @author  Michael Kölling and David J. Barnes
  * @version 2016.02.29
  */
-
-import java.util.Set;
 public class Game
 {
     private Parser parser;
@@ -47,7 +45,7 @@ public class Game
         centerEastHallway = new Room("in the center east hallway");
         fortGreenePlace = new Room("outside center west on Fort Greene Place");
         toNorthWestEntrance = new Room("looking toward the north west entrance");
-        toSouthWestEntrance = new Room("looking toard the south west entrance");
+        toSouthWestEntrance = new Room("looking toward the south west entrance");
         auditorium = new Room("Auditorium");
         toNorthEastEntrance = new Room("looking toward the north east entrance");
         toSouthEastEntrance = new Room("looking toward the south east entrance");
@@ -55,7 +53,6 @@ public class Game
         murral = new Room("at the murral in the lobby");
         auditorium = new Room("in the auditorium");
         secretRoomBelowAuditorium = new Room("secret room below the auditorium");
-
 
         // haunted house game rooms
 //        mainHall = new Room("in main hallway");
@@ -66,15 +63,10 @@ public class Game
 //        zombieRoom = new Room("in scary room full of brain-eating zombies");
 //        safeExit = new Room("safely outside haunted house");
 
-
-
-
-
         // initialise room exits (north, east, south, west)
         auditoriumLobby.setExits(murral, centerEastHallway, auditorium, centerWestHallway);
         centerWestHallway.setExits(toNorthWestEntrance, auditoriumLobby, toSouthWestEntrance, fortGreenePlace);
         centerEastHallway.setExits(toNorthEastEntrance, southEliot, toSouthEastEntrance, auditoriumLobby);
-
 
         fortGreenePlace.setExits(null, centerWestHallway, null, null);
         toNorthWestEntrance.setExits(null, null, centerWestHallway, null);
@@ -87,7 +79,6 @@ public class Game
         auditorium.setExit("downstairs", secretRoomBelowAuditorium);
         secretRoomBelowAuditorium.setExit("upstairs", auditorium);
 
-
         // initialize room exits for haunted house
 //        mainHall.setExits(graveyard, abandonedSchool, ghostRoom, zombieRoom);
 //        graveyard.setExits(null, batCave, mainHall, null);
@@ -96,7 +87,6 @@ public class Game
 //        batCave.setExits(null, null, abandonedSchool, mainHall);
 //        abandonedSchool.setExits(batCave, null, safeExit, ghostRoom);
 //        safeExit.setExits(abandonedSchool, null, null, ghostRoom);
-
 
         currentRoom = auditoriumLobby;  // start game outside
         //currentRoom = mainHall;
@@ -232,9 +222,14 @@ public class Game
             if(currentRoom.getExit("west") != null) {
                 System.out.print("west ");
             }
-            System.out.println();
+            if(currentRoom.getExit("downstairs") != null) {
+                System.out.print("downstairs ");
+            }
+            if(currentRoom.getExit("upstairs") != null) {
+               System.out.print("upstairs ");
+            }
+        System.out.println();
     }
-
 
     /**
      * "Quit" was entered. Check the rest of the command to see
